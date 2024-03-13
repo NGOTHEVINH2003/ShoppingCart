@@ -48,7 +48,7 @@ public class UpdateProductSrv extends HttpServlet {
 
 		String prodId = request.getParameter("pid");
 		String prodName = request.getParameter("name");
-		String prodType = request.getParameter("type");
+		int prodType = Integer.parseInt(request.getParameter("type"));
 		String prodInfo = request.getParameter("info");
 		Double prodPrice = Double.parseDouble(request.getParameter("price"));
 		Integer prodQuantity = Integer.parseInt(request.getParameter("quantity"));
@@ -59,7 +59,7 @@ public class UpdateProductSrv extends HttpServlet {
 		product.setProdInfo(prodInfo);
 		product.setProdPrice(prodPrice);
 		product.setProdQuantity(prodQuantity);
-		product.setProdType(prodType);
+		product.setProdCategory(prodType);
 
 		ProductServiceImpl dao = new ProductServiceImpl();
 
