@@ -139,12 +139,6 @@
 
             <jsp:include page="header.jsp" />
 
-            <input type="text" id="userNameTextBox" readonly>
-            <input type="text" id="productIdTextBox" readonly>
-            <input type="text" id="availTextBox" readonly>
-            <input type="text" id="productQuantityTextBox" readonly>
-            <input type="text" id="isAdding" readonly>
-
             <div class="text-center"
                  style="color: green; font-size: 24px; font-weight: bold;">Cart
                 Items</div>
@@ -232,7 +226,7 @@
                                 </form></td>
                             <td colspan="2" align="center"><form method="post">
                                     <button style="background-color: blue; color: white;"
-                                            formaction="payment.jsp?amount=<%=totAmount%>">Checkout</button>
+                                            formaction="checkoutCart.jsp?amount=<%=totAmount%>">Checkout</button>
                                 </form></td>
 
                         </tr>
