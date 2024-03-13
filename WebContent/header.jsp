@@ -71,10 +71,10 @@
                 <span class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><span
+            <a class="navbar-brand" href="index.jsp"><span
                     class="glyphicon glyphicon-home">&nbsp;</span>Shopping Center</a>
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="/shopping-cart/">Products</a></li>
+                <li><a href="index.jsp">Products</a></li>
                 <li class="dropdown"><a class="dropdown-toggle"
                                         data-toggle="dropdown" href="#">Category <span class="caret"></span>
                 </a>

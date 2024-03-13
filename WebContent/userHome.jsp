@@ -34,15 +34,11 @@
 	String search = request.getParameter("search");
 	String type = request.getParameter("type");
 	String message = "All Products";
-	if (search != null) {
-		products = prodDao.searchAllProducts(search);
-		message = "Showing Results for '" + search + "'";
-	} else if (type != null) {
-		products = prodDao.getAllProductsByType(type);
-		message = "Showing Results for '" + type + "'";
-	} else {
-		products = prodDao.getAllProducts();
-	}
+	if (search != null || type != null) {
+                    products = prodDao.searchAllProducts(search, type);
+                } else {
+                    products = prodDao.getAllProducts();
+                }
 	if (products.isEmpty()) {
 		message = "No items found for the search '" + (search != null ? search : type) + "'";
 		products = prodDao.getAllProducts();
