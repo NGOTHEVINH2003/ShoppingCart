@@ -61,7 +61,7 @@ public class AddtoCart extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 
 		response.setContentType("text/html");
-		if (pQty == cartQty) {
+		if (pQty == cartQty || pQty < 0) {
 			String status = cart.removeProductFromCart(userId, prodId);
 
 			RequestDispatcher rd = request.getRequestDispatcher("userHome.jsp");
