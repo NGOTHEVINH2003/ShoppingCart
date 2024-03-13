@@ -7,7 +7,7 @@ import com.shashi.beans.ProductBean;
 
 public interface ProductService {
 
-	public String addProduct(String prodName, String prodType, String prodInfo, double prodPrice, int prodQuantity,
+	public String addProduct(String prodName, int prodCategory, String prodInfo, double prodPrice, int prodQuantity,
 			InputStream prodImage);
 
 	public String addProduct(ProductBean product);
@@ -22,7 +22,7 @@ public interface ProductService {
 
 	public List<ProductBean> getAllProductsByType(String type);
 
-	public List<ProductBean> searchAllProducts(String search);
+	public List<ProductBean> searchAllProducts(String search, String type);
 
 	public byte[] getImage(String prodId);
 

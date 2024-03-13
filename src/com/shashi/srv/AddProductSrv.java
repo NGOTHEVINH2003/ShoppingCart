@@ -44,7 +44,7 @@ public class AddProductSrv extends HttpServlet {
 
 		String status = "Product Registration Failed!";
 		String prodName = request.getParameter("name");
-		String prodType = request.getParameter("type");
+                int prodType = Integer.parseInt(request.getParameter("type"));
 		String prodInfo = request.getParameter("info");
 		double prodPrice = Double.parseDouble(request.getParameter("price"));
 		int prodQuantity = Integer.parseInt(request.getParameter("quantity"));

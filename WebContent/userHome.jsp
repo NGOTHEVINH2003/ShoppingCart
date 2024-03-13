@@ -118,7 +118,7 @@
 	<!-- ENd of Product Items List -->
 
 
-	<%@ include file="footer.html"%>
+	<jsp:include page="footer.jsp" />
 
 </body>
 </html>
