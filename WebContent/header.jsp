@@ -1,12 +1,11 @@
-<%@page import="java.net.URLDecoder"%>
-<%@page import="java.util.Iterator" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@page import="com.shashi.service.impl.*, com.shashi.service.*" %>
 <%@page import="org.json.JSONObject" %>
 <%@page import="jakarta.servlet.http.Cookie" %>
-<%@page import="jakarta.servlet.http.HttpServletResponse" %>
-
+<%@page import="java.net.URLDecoder"%>
+<%@page import="java.util.Iterator" %>
 
 <!DOCTYPE html>
 <html>
@@ -37,7 +36,7 @@
 <!-- Company Header Ending -->
 
 <%
-    Cookie[] cookies = request.getCookies();
+    Cookie[] cookies = (jakarta.servlet.http.Cookie[]) request.getCookies();
     String cartJson = null;
     if (cookies != null) {
         for (Cookie cookie : cookies) {
