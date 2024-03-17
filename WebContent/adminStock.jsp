@@ -50,8 +50,10 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Price</th>
+                                <th>Sale_Peice</th>
                                 <th>Sold Qty</th>
                                 <th>Stock Qty</th>
+                                <th>Status</th>
                                 <th colspan="2" style="text-align: center">Actions</th>
                             </tr>
                         </thead>
@@ -78,8 +80,17 @@
                                 <td><%=name%></td>
                                 <td><%=product.getProdCategory().toUpperCase()%></td>
                                 <td><%=product.getProdPrice()%></td>
+                                <td><%=Math.floor(product.getProdPrice() * 0.9)%>
                                 <td><%=new OrderServiceImpl().countSoldItem(product.getProdId())%></td>
                                 <td><%=product.getProdQuantity()%></td>
+                                <% if (product.isActive()) { %>
+                                <td>
+                                    Active
+                                </td>
+                                <% } else { %>
+                                <td>
+                                    Inactive
+                                </td> <% }%>
                                 <td>
                                     <form method="post">
                                         <button type="submit"
@@ -99,7 +110,7 @@
                                         %>    
                                         <button type="submit"
                                                 formaction="./RemoveProductSrv?prodid=<%=product.getProdId()%>&isActive=true&type=admin"
-                                                class="btn btn-danger">Publish
+                                                class="btn btn-success">Publish
                                         </button>
                                         <% } %>
                                     </form>

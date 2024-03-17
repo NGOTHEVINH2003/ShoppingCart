@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
         PreparedStatement ps = null;
 
         try {
-            ps = con.prepareStatement("insert into product values(?,?,?,?,?,?,?);");
+            ps = con.prepareStatement("insert into product values(?,?,?,?,?,?,?,?);");
             ps.setString(1, product.getProdId());
             ps.setString(2, product.getProdName());
             ps.setString(3, product.getProdCategory());
@@ -51,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
             ps.setDouble(5, product.getProdPrice());
             ps.setInt(6, product.getProdQuantity());
             ps.setBlob(7, product.getProdImage());
+            ps.setBoolean(8, true);
 
             int k = ps.executeUpdate();
 
@@ -197,7 +198,7 @@ public class ProductServiceImpl implements ProductService {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("select * from product");
+            ps = con.prepareStatement("select * from product where is_active=1");
 
             rs = ps.executeQuery();
 
@@ -212,6 +213,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
                 product.setProdImage(rs.getAsciiStream(7));
+                product.setActive(rs.getBoolean(8));
 
                 products.add(product);
 
@@ -253,6 +255,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
                 product.setProdImage(rs.getAsciiStream(7));
+                product.setActive(rs.getBoolean(8));
 
                 products.add(product);
 
@@ -299,6 +302,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
                 product.setProdImage(rs.getAsciiStream(7));
+                product.setActive(rs.getBoolean(8));
 
                 products.add(product);
 
@@ -371,6 +375,7 @@ public class ProductServiceImpl implements ProductService {
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
                 product.setProdImage(rs.getAsciiStream(7));
+                product.setActive(rs.getBoolean(8));
             }
 
         } catch (SQLException e) {
@@ -543,14 +548,6 @@ public class ProductServiceImpl implements ProductService {
         return quantity;
     }
 
-    @Override
-    public String removeProduct(String prodId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String addProduct(String prodName, String prodCategory, String prodInfo, double prodPrice, int prodQuantity, InputStream prodImage) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }
