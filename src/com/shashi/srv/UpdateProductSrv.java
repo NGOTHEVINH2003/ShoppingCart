@@ -48,7 +48,7 @@ public class UpdateProductSrv extends HttpServlet {
 
 		String prodId = request.getParameter("pid");
 		String prodName = request.getParameter("name");
-		int prodType = Integer.parseInt(request.getParameter("type"));
+		String prodType = request.getParameter("type");
 		String prodInfo = request.getParameter("info");
 		Double prodPrice = Double.parseDouble(request.getParameter("price"));
 		Integer prodQuantity = Integer.parseInt(request.getParameter("quantity"));
