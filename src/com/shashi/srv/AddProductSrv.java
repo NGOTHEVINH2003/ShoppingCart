@@ -1,5 +1,6 @@
 package com.shashi.srv;
 
+import com.shashi.beans.ProductBean;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -57,7 +58,7 @@ public class AddProductSrv extends HttpServlet {
 
 		ProductServiceImpl product = new ProductServiceImpl();
 
-		status = product.addProduct(prodName, prodType, prodInfo, prodPrice, prodQuantity, prodImage);
+		status = product.addProduct(new ProductBean(prodInfo, prodName, prodName, prodInfo, prodPrice, prodQuantity, prodImage, true));
 
 		RequestDispatcher rd = request.getRequestDispatcher("addProduct.jsp?message=" + status);
 		rd.forward(request, response);

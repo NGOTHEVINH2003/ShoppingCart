@@ -14,50 +14,57 @@ import com.shashi.service.impl.ProductServiceImpl;
 
 @WebServlet("/RemoveProductSrv")
 public class RemoveProductSrv extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	public RemoveProductSrv() {
-		super();
+    private static final long serialVersionUID = 1L;
 
-	}
+    public RemoveProductSrv() {
+        super();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    }
 
-		HttpSession session = request.getSession();
-		String userType = (String) session.getAttribute("usertype");
-		String userName = (String) session.getAttribute("username");
-		String password = (String) session.getAttribute("password");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		if (userType == null || !userType.equals("admin")) {
+        HttpSession session = request.getSession();
+        String userType = (String) session.getAttribute("usertype");
+        String userName = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
 
-			response.sendRedirect("login.jsp?message=Access Denied, Login As Admin!!");
+        if (userType == null || !userType.equals("admin")) {
 
-		}
+            response.sendRedirect("login.jsp?message=Access Denied, Login As Admin!!");
 
-		else if (userName == null || password == null) {
+        } else if (userName == null || password == null) {
 
-			response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
-		}
+            response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
+        }
 
-		// login checked
+        // login checked
+        String prodId = request.getParameter("prodid");
+        String isActiveParam = request.getParameter("isActive");
+        boolean s = Boolean.parseBoolean(isActiveParam);
 
-		String prodId = request.getParameter("prodid");
+        String type = request.getParameter("type");
+        ProductServiceImpl product = new ProductServiceImpl();
 
-		ProductServiceImpl product = new ProductServiceImpl();
+        String status = product.removeProduct(prodId, s);
 
-		String status = product.removeProduct(prodId);
+        if (type != null) {
+            RequestDispatcher rd = request.getRequestDispatcher("adminStock.jsp");
+            rd.forward(request, response);
+        } else {
 
-		RequestDispatcher rd = request.getRequestDispatcher("removeProduct.jsp?message=" + status);
+            RequestDispatcher rd = request.getRequestDispatcher("adminViewProduct.jsp");
+            rd.forward(request, response);
 
-		rd.forward(request, response);
+        }
 
-	}
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		doGet(request, response);
-	}
+        doGet(request, response);
+    }
 
 }
