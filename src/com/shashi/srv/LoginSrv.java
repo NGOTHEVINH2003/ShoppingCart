@@ -11,7 +11,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import com.shashi.beans.UserBean;
+import com.shashi.beans.UserRoleBean;
 import com.shashi.service.impl.UserServiceImpl;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Servlet implementation class LoginSrv
@@ -28,65 +31,44 @@ public class LoginSrv extends HttpServlet {
 			throws ServletException, IOException {
 
 		String userName = request.getParameter("username");
-		String password = request.getParameter("password");
-		String userType = request.getParameter("usertype");
-		response.setContentType("text/html");
+        String password = request.getParameter("password");
+        response.setContentType("text/html");
 
-		String status = "Login Denied! Invalid Username or password.";
+        UserServiceImpl userService = new UserServiceImpl();
+        String status = userService.isValidCredential(userName, password);
+        if (status.equalsIgnoreCase("valid")) {
+            // valid user
+            UserBean user = userService.getUserDetails(userName, password);
+            UserRoleBean[] userRole = userService.getUserRole(user.getEmail());
+            Arrays.sort(userRole, Comparator.comparingInt(UserRoleBean::getRoleId));
+            HttpSession session = request.getSession();
+            session.setAttribute("userdata", user);
 
-		if (userType.equals("admin")) { // Login as Admin
+            session.setAttribute("username", user.getEmail());
+            session.setAttribute("password", user.getPassword());
+            session.setAttribute("name", user.getName());
+            session.setAttribute("address", user.getAddress());
+            session.setAttribute("phone", user.getMobile());
 
-			if (password.equals("admin") && userName.equals("admin@gmail.com")) {
-				// valid
+            // 1 is admin
+            // 2 is user
+            // apply admin if available
+            String userType = userRole[0].getRoleId() == 1 ? "admin" : "customer";
+            session.setAttribute("usertype", userType);
 
-				RequestDispatcher rd = request.getRequestDispatcher("adminViewProduct.jsp");
+            RequestDispatcher rd = null;
+            if (userType.equals("admin")) {
+                rd = request.getRequestDispatcher("adminViewProduct.jsp");
+            } else {
+                rd = request.getRequestDispatcher("userHome.jsp");
+            }
+            rd.forward(request, response);
+        } else {
+            // invalid user;
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp?message=" + status);
+            rd.forward(request, response);
+        }
 
-				HttpSession session = request.getSession();
-
-				session.setAttribute("username", userName);
-				session.setAttribute("password", password);
-				session.setAttribute("usertype", userType);
-
-				rd.forward(request, response);
-
-			} else {
-				// Invalid;
-				RequestDispatcher rd = request.getRequestDispatcher("login.jsp?message=" + status);
-				rd.include(request, response);
-			}
-
-		} else { // Login as customer
-
-			UserServiceImpl udao = new UserServiceImpl();
-
-			status = udao.isValidCredential(userName, password);
-
-			if (status.equalsIgnoreCase("valid")) {
-				// valid user
-
-				UserBean user = udao.getUserDetails(userName, password);
-
-				HttpSession session = request.getSession();
-
-				session.setAttribute("userdata", user);
-
-				session.setAttribute("username", userName);
-				session.setAttribute("password", password);
-				session.setAttribute("usertype", userType);
-
-				RequestDispatcher rd = request.getRequestDispatcher("userHome.jsp");
-
-				rd.forward(request, response);
-
-			} else {
-				// invalid user;
-
-				RequestDispatcher rd = request.getRequestDispatcher("login.jsp?message=" + status);
-
-				rd.forward(request, response);
-
-			}
-		}
 
 	}
 

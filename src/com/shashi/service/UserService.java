@@ -1,6 +1,7 @@
 package com.shashi.service;
 
 import com.shashi.beans.UserBean;
+import com.shashi.beans.UserRoleBean;
 
 public interface UserService {
 
@@ -23,5 +24,9 @@ public interface UserService {
 	public String getFName(String emailId);
 
 	public String getUserAddr(String userId);
+        
+        public String resetPassword(String emailId, String newPassword);
+        
+        public UserRoleBean[] getUserRole(String emailId);
 
 }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
+<title>Forgot Password</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/changes.css">
@@ -22,7 +22,7 @@
 	<div class="container">
 		<div class="row"
 			style="margin-top: 5px; margin-left: 2px; margin-right: 2px;">
-			<form action="./LoginSrv" method="post"
+			<form action="./ResetPasswordSrv" method="get"
 				class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2"
 				style="border: 2px solid black; border-radius: 10px; background-color: #FFE5CC; padding: 10px;">
 				<div style="font-weight: bold;" class="text-center">
@@ -47,21 +47,28 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 form-group">
-						<label for="last_name">Password</label> <input type="password"
-							placeholder="Enter Password" name="password" class="form-control"
-							id="last_name" required>
+						<label for="old_password">Enter Old Password</label> <input type="password"
+							placeholder="Old Password" name="oldPassword" class="form-control"
+							id="old_password" required>
 					</div>
 				</div>
-
                                 <div class="row">
-                                    <div class="col-md-12">
+					<div class="col-md-12 form-group">
+						<label for="new_password">Enter New Password</label> <input type="password"
+							placeholder="New Password" name="newPassword" class="form-control"
+							id="new_password" required>
+					</div>
+				</div>
+				
+                                <div class="row">
+                                    <div class ="col-md-12"">
                                         <p>Haven't got an account? <a href="register.jsp">Register</a></p>
-                                        <a href="forgotPassword.jsp">Forgot Password</a>
+                                        <a href="login.jsp">Back to Login</a>
                                     </div>
-                                </div
+                                </div>
 				<div class="row">
 					<div class="col-md-12 text-center">
-						<button type="submit" class="btn btn-success">Login</button>
+						<button type="submit" class="btn btn-success">Reset Password</button>
 					</div>
 				</div>
 			</form>

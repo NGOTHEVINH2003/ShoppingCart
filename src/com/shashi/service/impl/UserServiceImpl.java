@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.shashi.beans.UserBean;
+import com.shashi.beans.UserRoleBean;
 import com.shashi.constants.IUserConstants;
 import com.shashi.service.UserService;
 import com.shashi.utility.DBUtil;
@@ -227,5 +228,82 @@ public class UserServiceImpl implements UserService {
 
 		return userAddr;
 	}
+
+    @Override
+    public String resetPassword(String emailId, String newPassword) {
+        String status = "Password reset failed!";
+    
+    Connection con = DBUtil.provideConnection();
+    PreparedStatement ps = null;
+    
+    try {
+        ps = con.prepareStatement("UPDATE user SET password = ? WHERE email = ?");
+        ps.setString(1, newPassword);
+        ps.setString(2, emailId);
+        
+        int rowsUpdated = ps.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            status = "Password reset successfully!";
+        } else {
+            status = "User not found or password update failed!";
+        }
+    } catch (SQLException e) {
+        status = "Error: " + e.getMessage();
+        e.printStackTrace();
+    } finally {
+        DBUtil.closeConnection(con);
+        DBUtil.closeConnection(ps);
+    }
+    
+    return status;
+    }
+
+    @Override
+    public UserRoleBean[] getUserRole(String emailId) {
+        UserRoleBean[] userRole = null;
+        Connection con = DBUtil.provideConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("select * from user_role where user_email=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps.setString(1, emailId);
+            rs = ps.executeQuery();
+            rs.last();
+            userRole = new UserRoleBean[rs.getRow()];
+            rs.beforeFirst();
+            int i = 0;
+            while (rs.next()) {
+                userRole[i] = new UserRoleBean();
+                userRole[i].setUserEmail(rs.getString("user_email"));
+                userRole[i].setRoleId(rs.getInt("role_id"));
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        DBUtil.closeConnection(con);
+        DBUtil.closeConnection(ps);
+        DBUtil.closeConnection(rs);
+        return userRole;
+    }
+
+    public UserRoleBean insert(UserRoleBean userRole) {
+        Connection con = DBUtil.provideConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement("insert into user_role values(?,?)");
+            ps.setString(1, userRole.getUserEmail());
+            ps.setInt(2, userRole.getRoleId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        DBUtil.closeConnection(con);
+        DBUtil.closeConnection(ps);
+        return userRole;
+
+    }
 
 }
