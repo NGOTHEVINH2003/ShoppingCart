@@ -19,6 +19,8 @@ public interface ProductService {
 	public String updateProductPrice(String prodId, double updatedPrice);
 
 	public List<ProductBean> getAllProducts();
+        
+        public List<ProductBean> getAllProductStock();
 
 	public List<ProductBean> getAllProductsByType(String type);
 
