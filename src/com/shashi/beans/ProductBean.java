@@ -11,13 +11,13 @@ public class ProductBean implements Serializable {
 
     private String prodId;
     private String prodName;
-    private int prodCategory;
+    private String prodCategory;
     private String prodInfo;
     private double prodPrice;
     private int prodQuantity;
     private InputStream prodImage;
 
-    public ProductBean(String prodId, String prodName, int prodCategory, String prodInfo, double prodPrice,
+    public ProductBean(String prodId, String prodName, String prodCategory, String prodInfo, double prodPrice,
             int prodQuantity, InputStream prodImage) {
         super();
         this.prodId = prodId;
@@ -77,11 +77,11 @@ public class ProductBean implements Serializable {
         this.prodImage = prodImage;
     }
 
-    public int getProdCategory() {
+    public String getProdCategory() {
         return prodCategory;
     }
 
-    public void setProdCategory(int prodCategory) {
+    public void setProdCategory(String prodCategory) {
         this.prodCategory = prodCategory;
     }
 

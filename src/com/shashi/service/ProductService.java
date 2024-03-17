@@ -7,7 +7,7 @@ import com.shashi.beans.ProductBean;
 
 public interface ProductService {
 
-	public String addProduct(String prodName, int prodCategory, String prodInfo, double prodPrice, int prodQuantity,
+	public String addProduct(String prodName, String prodCategory, String prodInfo, double prodPrice, int prodQuantity,
 			InputStream prodImage);
 
 	public String addProduct(ProductBean product);

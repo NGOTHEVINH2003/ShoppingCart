@@ -18,7 +18,7 @@ import com.shashi.utility.MailMessage;
 public class ProductServiceImpl implements ProductService {
 
 	@Override
-	public String addProduct(String prodName, int prodCategory, String prodInfo, double prodPrice, int prodQuantity,
+	public String addProduct(String prodName, String prodCategory, String prodInfo, double prodPrice, int prodQuantity,
 			InputStream prodImage) {
 		String status = null;
 		String prodId = IDUtil.generateId();
@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 			ps = con.prepareStatement("insert into product values(?,?,?,?,?,?,?);");
 			ps.setString(1, product.getProdId());
 			ps.setString(2, product.getProdName());
-			ps.setInt(3, product.getProdCategory());
+			ps.setString(3, product.getProdCategory());
 			ps.setString(4, product.getProdInfo());
 			ps.setDouble(5, product.getProdPrice());
 			ps.setInt(6, product.getProdQuantity());
@@ -131,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
 					"update product set pname=?,ptype=?,pinfo=?,pprice=?,pquantity=?,image=? where pid=?");
 
 			ps.setString(1, updatedProduct.getProdName());
-			ps.setInt(2, updatedProduct.getProdCategory());
+			ps.setString(2, updatedProduct.getProdCategory());
 			ps.setString(3, updatedProduct.getProdInfo());
 			ps.setDouble(4, updatedProduct.getProdPrice());
 			ps.setInt(5, updatedProduct.getProdQuantity());
@@ -203,7 +203,7 @@ public class ProductServiceImpl implements ProductService {
 
 				product.setProdId(rs.getString(1));
 				product.setProdName(rs.getString(2));
-				product.setProdCategory(rs.getInt(3));
+				product.setProdCategory(rs.getString(3));
 				product.setProdInfo(rs.getString(4));
 				product.setProdPrice(rs.getDouble(5));
 				product.setProdQuantity(rs.getInt(6));
@@ -244,7 +244,7 @@ public class ProductServiceImpl implements ProductService {
 
 				product.setProdId(rs.getString(1));
 				product.setProdName(rs.getString(2));
-				product.setProdCategory(rs.getInt(3));
+				product.setProdCategory(rs.getString(3));
 				product.setProdInfo(rs.getString(4));
 				product.setProdPrice(rs.getDouble(5));
 				product.setProdQuantity(rs.getInt(6));
@@ -290,7 +290,7 @@ public class ProductServiceImpl implements ProductService {
 
 				product.setProdId(rs.getString(1));
 				product.setProdName(rs.getString(2));
-				product.setProdCategory(rs.getInt(3));
+				product.setProdCategory(rs.getString(3));
 				product.setProdInfo(rs.getString(4));
 				product.setProdPrice(rs.getDouble(5));
 				product.setProdQuantity(rs.getInt(6));
@@ -361,7 +361,7 @@ public class ProductServiceImpl implements ProductService {
 				product = new ProductBean();
 				product.setProdId(rs.getString(1));
 				product.setProdName(rs.getString(2));
-				product.setProdCategory(rs.getInt(3));
+				product.setProdCategory(rs.getString(3));
 				product.setProdInfo(rs.getString(4));
 				product.setProdPrice(rs.getDouble(5));
 				product.setProdQuantity(rs.getInt(6));
@@ -399,7 +399,7 @@ public class ProductServiceImpl implements ProductService {
 			ps = con.prepareStatement("update product set pname=?,ptype=?,pinfo=?,pprice=?,pquantity=? where pid=?");
 
 			ps.setString(1, updatedProduct.getProdName());
-			ps.setInt(2, updatedProduct.getProdCategory());
+			ps.setString(2, updatedProduct.getProdCategory());
 			ps.setString(3, updatedProduct.getProdInfo());
 			ps.setDouble(4, updatedProduct.getProdPrice());
 			ps.setInt(5, updatedProduct.getProdQuantity());
