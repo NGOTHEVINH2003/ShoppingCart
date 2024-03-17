@@ -42,7 +42,7 @@
 	String type = request.getParameter("type");
 	String message = "All Products";
 	if (search != null) {
-		products = prodDao.searchAllProducts(search);
+		products = prodDao.searchAllProducts(search, type);
 		message = "Showing Results for '" + search + "'";
 	} else if (type != null) {
 		products = prodDao.getAllProductsByType(type);

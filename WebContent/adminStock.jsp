@@ -78,7 +78,7 @@
 						name = name.substring(0, Math.min(name.length(), 25)) + "..";
 						%>
 						<td><%=name%></td>
-						<td><%=product.getProdType().toUpperCase()%></td>
+						<td><%=product.getProdCategory().toUpperCase()%></td>
 						<td><%=product.getProdPrice()%></td>
 						<td><%=new OrderServiceImpl().countSoldItem(product.getProdId())%></td>
 						<td><%=product.getProdQuantity()%></td>
