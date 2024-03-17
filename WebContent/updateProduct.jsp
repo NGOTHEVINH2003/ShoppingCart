@@ -76,7 +76,7 @@
 					</div>
 					<div class="col-md-6 form-group">
 						<%
-						String ptype = product.getProdType();
+						String ptype = product.getProdCategory();
 						%>
 						<label for="producttype">Product Type</label> <select name="type"
 							id="producttype" class="form-control" required>

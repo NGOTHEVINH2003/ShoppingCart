@@ -8,11 +8,11 @@ import com.shashi.beans.ProductBean;
 public interface ProductService {
 
 	public String addProduct(String prodName, String prodCategory, String prodInfo, double prodPrice, int prodQuantity,
-			InputStream prodImage);
+			InputStream prodImage, boolean isActive);
 
 	public String addProduct(ProductBean product);
 
-	public String removeProduct(String prodId);
+	public String removeProduct(String prodId, boolean s);
 
 	public String updateProduct(ProductBean prevProduct, ProductBean updatedProduct);
 
