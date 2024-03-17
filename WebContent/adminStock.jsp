@@ -94,7 +94,7 @@
                                 <td>
                                     <form method="post">
                                         <button type="submit"
-                                                formaction="updateProduct.jsp?prodid=<%=product.getProdId()%>"
+                                                formaction="addProduct.jsp?prodid=<%=product.getProdId()%>&form=updateById"
                                                 class="btn btn-primary">Update</button>
                                     </form>
                                 </td>
