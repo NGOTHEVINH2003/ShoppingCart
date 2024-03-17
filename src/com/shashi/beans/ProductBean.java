@@ -16,9 +16,10 @@ public class ProductBean implements Serializable {
     private double prodPrice;
     private int prodQuantity;
     private InputStream prodImage;
+    private boolean isActive;
 
     public ProductBean(String prodId, String prodName, String prodCategory, String prodInfo, double prodPrice,
-            int prodQuantity, InputStream prodImage) {
+            int prodQuantity, InputStream prodImage,boolean isActive ) {
         super();
         this.prodId = prodId;
         this.prodName = prodName;
@@ -27,6 +28,7 @@ public class ProductBean implements Serializable {
         this.prodPrice = prodPrice;
         this.prodQuantity = prodQuantity;
         this.prodImage = prodImage;
+        this.isActive = isActive;
     }
 
     public String getProdId() {
@@ -84,5 +86,12 @@ public class ProductBean implements Serializable {
     public void setProdCategory(String prodCategory) {
         this.prodCategory = prodCategory;
     }
+    
+    public boolean isActive() {
+        return isActive;
+    }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
