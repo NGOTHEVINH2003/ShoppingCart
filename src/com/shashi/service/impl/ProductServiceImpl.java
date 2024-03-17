@@ -193,7 +193,7 @@ public class ProductServiceImpl implements ProductService {
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select * from product");
+			ps = con.prepareStatement("select * from product where is_active = 1");
 
 			rs = ps.executeQuery();
 

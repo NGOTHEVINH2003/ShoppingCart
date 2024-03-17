@@ -34,8 +34,6 @@
                 String message = "All Products";
                 if (search != null || type != null) {
                     products = prodDao.searchAllProducts(search, type);
-                } else {
-                    products = prodDao.getAllProducts();
                 }
                 if (products.isEmpty()) {
                     message = "No items found for the search '" + (search != null ? search : type) + "'";
