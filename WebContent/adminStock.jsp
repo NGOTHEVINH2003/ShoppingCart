@@ -50,7 +50,7 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Price</th>
-                                <th>Sale_Peice</th>
+                                <th>Sale_Price</th>
                                 <th>Sold Qty</th>
                                 <th>Stock Qty</th>
                                 <th>Status</th>
