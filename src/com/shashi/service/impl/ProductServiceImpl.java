@@ -197,6 +197,7 @@ public class ProductServiceImpl implements ProductService {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
+
         try {
             ps = con.prepareStatement("select * from product where is_active=1");
 
@@ -546,6 +547,49 @@ public class ProductServiceImpl implements ProductService {
         DBUtil.closeConnection(ps);
 
         return quantity;
+    }
+
+    @Override
+    public List<ProductBean> getAllProductStock() {
+        List<ProductBean> products = new ArrayList<ProductBean>();
+
+        Connection con = DBUtil.provideConnection();
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+
+        try {
+            ps = con.prepareStatement("select * from product ");
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                ProductBean product = new ProductBean();
+
+                product.setProdId(rs.getString(1));
+                product.setProdName(rs.getString(2));
+                product.setProdCategory(rs.getString(3));
+                product.setProdInfo(rs.getString(4));
+                product.setProdPrice(rs.getDouble(5));
+                product.setProdQuantity(rs.getInt(6));
+                product.setProdImage(rs.getAsciiStream(7));
+                product.setActive(rs.getBoolean(8));
+
+                products.add(product);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        DBUtil.closeConnection(con);
+        DBUtil.closeConnection(ps);
+        DBUtil.closeConnection(rs);
+
+        return products;
     }
 
     
