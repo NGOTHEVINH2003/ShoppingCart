@@ -19,9 +19,20 @@
     <body style="background-color: #E6F9E6;">
         <%
 
+            /* Checking the user credentials */
             String userType = (String) session.getAttribute("usertype");
             String userName = (String) session.getAttribute("username");
             String password = (String) session.getAttribute("password");
+
+            if (userType == null || !userType.equals("admin")) {
+
+                response.sendRedirect("login.jsp?message=Access Denied, Login as admin!!");
+
+            } else if (userName == null || password == null) {
+
+                response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
+
+            }
             String form = "";
             form = request.getParameter("form");
             String prodid = request.getParameter("prodid");
@@ -32,22 +43,6 @@
                     return;
                 }
             }
-            /* Checking the user credentials */
-//	String userType = (String) session.getAttribute("usertype");
-//	String userName = (String) session.getAttribute("username");
-//	String password = (String) session.getAttribute("password");
-//
-//	if (userType == null || !userType.equals("admin")) {
-//
-//		response.sendRedirect("login.jsp?message=Access Denied, Login as admin!!");
-//
-//	}
-//
-//	else if (userName == null || password == null) {
-//
-//		response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
-//
-//	}
         %>
 
         <jsp:include page="header.jsp" />
@@ -58,17 +53,7 @@
         <div class="container">
             <div class="row"
                  style="margin-top: 5px; margin-left: 2px; margin-right: 2px;">
-                <div class="row" style="width: 50%; margin: auto">
-                    <div class="col-md-6 text-center">
-                        <form action="./addProduct.jsp">
-                            <input type="hidden" value="add" name="form">
-                            <button type="submit" value="Add Product" class="btn btn-success">
-                                Add Product
-                            </button>
-                        </form>
-                    </div>
-                    
-                </div>
+                
                 <% if (form == null || form.equals("add")) { %>
                 <form action="./AddProductSrv" method="post"
                       enctype="multipart/form-data" class="col-md-6 col-md-offset-3"
@@ -141,6 +126,17 @@
                     </div>
                 </form>
                 <%} else if (form.equals("updateById")) {%>
+                <div class="row" style="width: 50%; margin: auto">
+                    <div class="col-md-6 text-center">
+                        <form action="./addProduct.jsp">
+                            <input type="hidden" value="add" name="form">
+                            <button type="submit" value="Add Product" class="btn btn-success">
+                                Add Product
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
                 <form action="./UpdateProductSrv" method="post"
                       enctype="multipart/form-data" class="col-md-6 col-md-offset-3"
                       style="border: 2px solid black; border-radius: 10px; background-color: #FFE5CC; padding: 10px;">
