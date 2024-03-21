@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
         String status = null;
         String prodId = IDUtil.generateId();
 
-        ProductBean product = new ProductBean(prodId, prodName, prodCategory, prodInfo, prodPrice, prodQuantity, prodImage,isActive);
+        ProductBean product = new ProductBean(prodId, prodName, prodCategory, prodInfo, prodPrice, prodQuantity, prodImage, isActive);
 
         status = addProduct(product);
 
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String removeProduct(String prodId,boolean s) {
+    public String removeProduct(String prodId, boolean s) {
         String status = "Product Removal Failed!";
 
         Connection con = DBUtil.provideConnection();
@@ -131,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
 
         try {
             ps = con.prepareStatement(
-                    "update product set pname=?,ptype=?,pinfo=?,pprice=?,pquantity=?,image=? where pid=?");
+                    "update product set pname=?,pcategory=?,pinfo=?,pprice=?,pquantity=?,image=? where pid=?");
 
             ps.setString(1, updatedProduct.getProdName());
             ps.setString(2, updatedProduct.getProdCategory());
@@ -196,7 +196,6 @@ public class ProductServiceImpl implements ProductService {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
-
 
         try {
             ps = con.prepareStatement("select * from product where is_active=1");
@@ -550,24 +549,46 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductBean> getAllProductStock() {
+    public List<ProductBean> getAllProductStock(String categoryId, boolean isActive, String searchKeyword) {
         List<ProductBean> products = new ArrayList<ProductBean>();
-
         Connection con = DBUtil.provideConnection();
-
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-
         try {
-            ps = con.prepareStatement("select * from product ");
+            String query = "SELECT * FROM product WHERE 1=1 ";
+            if (categoryId != null && !categoryId.isEmpty()) {
+                query += " AND pcategory = ?";
+            }
+             if (isActive) {
+                query += " AND is_active = ?";
+            }
+
+            if (searchKeyword != null && !searchKeyword.isEmpty()) {
+                query += " AND (prodName LIKE ? OR prodCategory LIKE ? OR prodInfo LIKE ?)";
+            }
+
+            ps = con.prepareStatement(query);
+
+            
+            if (categoryId != null && !categoryId.isEmpty()) {
+                ps.setString(1, categoryId);
+            }
+             if (isActive) {
+                ps.setBoolean(2, isActive);
+            }
+            
+            if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            String likeKeyword = "%" + searchKeyword + "%";
+            for (int i = 0; i < 3; i++) {
+                ps.setString(3, likeKeyword);
+            }
+        }
 
             rs = ps.executeQuery();
 
             while (rs.next()) {
-
                 ProductBean product = new ProductBean();
-
                 product.setProdId(rs.getString(1));
                 product.setProdName(rs.getString(2));
                 product.setProdCategory(rs.getString(3));
@@ -576,22 +597,60 @@ public class ProductServiceImpl implements ProductService {
                 product.setProdQuantity(rs.getInt(6));
                 product.setProdImage(rs.getAsciiStream(7));
                 product.setActive(rs.getBoolean(8));
-
                 products.add(product);
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(con);
+            DBUtil.closeConnection(ps);
+            DBUtil.closeConnection(rs);
         }
-
-        DBUtil.closeConnection(con);
-        DBUtil.closeConnection(ps);
-        DBUtil.closeConnection(rs);
 
         return products;
     }
 
-    
+    public List<ProductBean> getAllProductStockByIsActive() {
+        List<ProductBean> products = new ArrayList<ProductBean>();
+        Connection con = DBUtil.provideConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT * FROM product";
+
+            ps = con.prepareStatement(query);
+            
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ProductBean product = new ProductBean();
+                product.setProdId(rs.getString(1));
+                product.setProdName(rs.getString(2));
+                product.setProdCategory(rs.getString(3));
+                product.setProdInfo(rs.getString(4));
+                product.setProdPrice(rs.getDouble(5));
+                product.setProdQuantity(rs.getInt(6));
+                product.setProdImage(rs.getAsciiStream(7));
+                product.setActive(rs.getBoolean(8));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(con);
+            DBUtil.closeConnection(ps);
+            DBUtil.closeConnection(rs);
+        }
+
+        return products;
+    }
+
+    public List<ProductBean> getProductsForPage(List<ProductBean> productList, int page, int recordsPerPage) {
+        int startIndex = (page - 1) * recordsPerPage;
+        int endIndex = Math.min(startIndex + recordsPerPage, productList.size());
+
+        return productList.subList(startIndex, endIndex);
+    }
 
 }

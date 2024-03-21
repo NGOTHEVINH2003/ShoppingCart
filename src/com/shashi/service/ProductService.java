@@ -20,7 +20,7 @@ public interface ProductService {
 
 	public List<ProductBean> getAllProducts();
         
-        public List<ProductBean> getAllProductStock();
+        public List<ProductBean> getAllProductStock(String categoryId, boolean isActive, String searchKeyword);
 
 	public List<ProductBean> getAllProductsByType(String type);
 

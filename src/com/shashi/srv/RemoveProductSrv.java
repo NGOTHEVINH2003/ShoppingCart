@@ -41,7 +41,7 @@ public class RemoveProductSrv extends HttpServlet {
 
         // login checked
         String prodId = request.getParameter("prodid");
-        String isActiveParam = request.getParameter("isActive");
+        String isActiveParam = request.getParameter("status");
         boolean s = Boolean.parseBoolean(isActiveParam);
 
         String type = request.getParameter("type");
@@ -50,7 +50,7 @@ public class RemoveProductSrv extends HttpServlet {
         String status = product.removeProduct(prodId, s);
 
         if (type != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("adminStock.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("./ProductListServlet");
             rd.forward(request, response);
         } else {
 

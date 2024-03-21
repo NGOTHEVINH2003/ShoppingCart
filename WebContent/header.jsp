@@ -233,7 +233,7 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="adminStock.jsp">Stock</a></li>
+                        <li><a href="./ProductListServlet">Stock</a></li>
                         <li><a href="shippedItems.jsp">Shipped</a></li>
                         <li><a href="unshippedItems.jsp">Orders</a></li>
                         <li><a href="addProduct.jsp">Add Product</a></li>

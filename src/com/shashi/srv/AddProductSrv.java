@@ -58,7 +58,7 @@ public class AddProductSrv extends HttpServlet {
 
 		ProductServiceImpl product = new ProductServiceImpl();
 
-		status = product.addProduct(new ProductBean(prodInfo, prodName, prodName, prodInfo, prodPrice, prodQuantity, prodImage, true));
+		status = product.addProduct(new ProductBean(prodInfo, prodName, prodType, prodInfo, prodPrice, prodQuantity, prodImage, true));
 
 		RequestDispatcher rd = request.getRequestDispatcher("addProduct.jsp?message=" + status);
 		rd.forward(request, response);
